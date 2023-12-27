@@ -6,9 +6,9 @@ Firstly, the page was designed in **Figma** to outline all the interface styles 
 
 Throughout the application development, **version control** was managed via **GIT**, following a **CI/CD** workflow in the pipeline, such as trunk-based development, overseeing all the code that was committed to the master branch using **husky** hooks, among others. For maintaining code quality practices, tools like **Eslint** and **Prettier** were utilized. **Lighthouse** was employed to monitor **accessibility**, **best practices**, **SEO**, and performance aspects.
 
-[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=isdi-coders-2023_Matias-Risco-Final-Project-front-202309-bcn)](https://sonarcloud.io/summary/new_code?id=isdi-coders-2023_Matias-Risco-Final-Project-front-202309-bcn)
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=bigotes0invisibles_202309-w12-final-project-front-matias-risco)](https://sonarcloud.io/summary/overall?id=bigotes0invisibles_202309-w12-final-project-front-matias-risco)
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=isdi-coders-2023_Matias-Risco-Final-Project-front-202309-bcn&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=isdi-coders-2023_Matias-Risco-Final-Project-front-202309-bcn)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=bigotes0invisibles_202309-w12-final-project-front-matias-risco&metric=alert_status)](https://sonarcloud.io/summary/overall?id=bigotes0invisibles_202309-w12-final-project-front-matias-risco)
 
 ## Features
 
