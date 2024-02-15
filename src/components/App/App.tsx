@@ -20,6 +20,10 @@ const LazyNotFoundPage = React.lazy(
   () => import("../../pages/NotFoundPage/NotFoundPage"),
 );
 
+const LazyLoginUserPage = React.lazy(
+  () => import("../../pages/LoginUserPage/LoginUserPage"),
+);
+
 const App = (): React.ReactElement => {
   const { isLoading } = useAppSelector(({ uiState }) => uiState);
   return (
@@ -64,6 +68,14 @@ const App = (): React.ReactElement => {
           element={
             <React.Suspense>
               <LazyNotFoundPage />
+            </React.Suspense>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <React.Suspense>
+              <LazyLoginUserPage />
             </React.Suspense>
           }
         />
