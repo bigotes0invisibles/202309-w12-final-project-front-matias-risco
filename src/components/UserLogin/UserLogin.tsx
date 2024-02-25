@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserLoginStyled from "./UserLoginStyled";
 import Button from "../Button/Button";
 import { NavLink } from "react-router-dom";
@@ -26,12 +26,14 @@ const UserLogin = (): React.ReactElement => {
       ...newUser,
       [event.target.id]: event.target.value,
     }));
+  };
 
+  useEffect(() => {
     setButtonState(
       newUser.password.length < minWordLength ||
         newUser.username.length < minWordLength,
     );
-  };
+  }, [newUser]);
 
   return (
     <UserLoginStyled autoComplete="off">

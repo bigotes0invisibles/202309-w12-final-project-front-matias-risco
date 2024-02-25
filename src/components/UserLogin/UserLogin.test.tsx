@@ -7,7 +7,7 @@ describe("Given the component UserLogin", () => {
     test("the user should have the button Login should be not disable", async () => {
       const testUsername = "Ana";
       const testPassword = "peke";
-      const expectedButtonDisable = true;
+      const expectedButtonDisable = false;
 
       customRender(<UserLogin />, { isMemoryRouter: true });
 
@@ -35,9 +35,32 @@ describe("Given the component UserLogin", () => {
         name: "Login",
       })) as HTMLButtonElement;
 
-      console.log(inputUsernameElement.value);
-      console.log(inputPasswordElement.value);
       console.log(loginButton);
+
+      expect(loginButton.disabled).toBe(expectedButtonDisable);
+    });
+  });
+
+  describe("When UserLogin it is render, the password is peke", () => {
+    test("the user should have the button Login should be disable", async () => {
+      const testPassword = "peke";
+      const expectedButtonDisable = true;
+
+      customRender(<UserLogin />, { isMemoryRouter: true });
+
+      const inputPasswordElement = screen.getByLabelText(
+        "Password:",
+      ) as HTMLInputElement;
+
+      await fireEvent.change(inputPasswordElement, {
+        target: {
+          value: testPassword,
+        },
+      });
+
+      const loginButton = (await screen.findByRole("button", {
+        name: "Login",
+      })) as HTMLButtonElement;
 
       expect(loginButton.disabled).toBe(expectedButtonDisable);
     });
