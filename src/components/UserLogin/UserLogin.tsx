@@ -1,4 +1,9 @@
 import { useState } from "react";
+import UserLoginStyled from "./UserLoginStyled";
+import Button from "../Button/Button";
+import { NavLink } from "react-router-dom";
+
+const minWordLength = +(import.meta.env.MIN_LENGTH_WORD ?? 3);
 
 interface UserLoginStructure {
   username: string;
@@ -12,6 +17,7 @@ const InitialUser: UserLoginStructure = {
 
 const UserLogin = (): React.ReactElement => {
   const [newUser, setNewUser] = useState(InitialUser);
+  const [buttonState, setButtonState] = useState(true);
 
   const onChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -20,34 +26,47 @@ const UserLogin = (): React.ReactElement => {
       ...newUser,
       [event.target.id]: event.target.value,
     }));
+
+    setButtonState(
+      newUser.password.length < minWordLength ||
+        newUser.username.length < minWordLength,
+    );
   };
 
   return (
-    <section>
-      <h3>User Login</h3>
+    <UserLoginStyled autoComplete="off">
+      <h2>User Login</h2>
 
-      <div>
-        <label htmlFor="username">username: </label>
+      <div className="user-form__input">
+        <label htmlFor="username">Username: </label>
         <input
           type="text"
           id="username"
           value={newUser.username}
           onChange={onChange}
+          className="input-text"
           required
         />
       </div>
 
-      <div>
-        <label htmlFor="password">password: </label>
+      <div className="user-form__input">
+        <label htmlFor="password">Password: </label>
         <input
-          type="text"
+          type="password"
           id="password"
           value={newUser.password}
           onChange={onChange}
+          className="input-text"
           required
         />
       </div>
-    </section>
+      <NavLink className="user-form__input" to="/register">
+        i don't have a account
+      </NavLink>
+      <Button className="button--text" disable={buttonState}>
+        Login
+      </Button>
+    </UserLoginStyled>
   );
 };
 
