@@ -53,6 +53,12 @@ body{
   font-size: ${({ theme }) => theme.typography.propertySize};
   font-weight: 600;
 }
+
+a{
+  color: inherit;
+  font-family: inherit;
+
+}
 `;
 
 export default GlobalsStyled;
