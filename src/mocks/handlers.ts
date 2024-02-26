@@ -5,6 +5,7 @@ import {
   GameWithPartialBodyStructure,
 } from "../store/feature/games/types";
 import gamesMock from "./gamesMockData";
+import { tokenMock } from "./userMockData";
 
 const urlApi = import.meta.env.VITE_API_URL;
 
@@ -67,5 +68,9 @@ export const handlers = [
 
   http.get(`${urlApi}/games/count`, () => {
     return HttpResponse.json({ numberGames: gamesMock.length });
+  }),
+
+  http.post(`${urlApi}/users/login`, () => {
+    return HttpResponse.json({ token: tokenMock });
   }),
 ];
