@@ -22,7 +22,7 @@ const useUserApi = () => {
 
       return token;
     } catch (error) {
-      throw new Error((error as Error).message);
+      throw new Error("Error in login, username or password is incorrect");
     }
   }, []);
 

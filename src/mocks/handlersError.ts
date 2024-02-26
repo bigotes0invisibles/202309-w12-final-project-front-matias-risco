@@ -26,4 +26,8 @@ export const handlersError = [
   http.get(`${urlApi}/games/count`, () => {
     return HttpResponse.error();
   }),
+
+  http.get(`${urlApi}/users/login`, () => {
+    return HttpResponse.error();
+  }),
 ];
