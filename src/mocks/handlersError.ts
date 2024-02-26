@@ -27,7 +27,7 @@ export const handlersError = [
     return HttpResponse.error();
   }),
 
-  http.get(`${urlApi}/users/login`, () => {
+  http.post(`${urlApi}/users/login`, () => {
     return HttpResponse.error();
   }),
 ];

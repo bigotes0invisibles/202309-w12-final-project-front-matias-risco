@@ -70,7 +70,7 @@ export const handlers = [
     return HttpResponse.json({ numberGames: gamesMock.length });
   }),
 
-  http.get(`${urlApi}/users/login`, () => {
+  http.post(`${urlApi}/users/login`, () => {
     return HttpResponse.json({ token: tokenMock });
   }),
 ];

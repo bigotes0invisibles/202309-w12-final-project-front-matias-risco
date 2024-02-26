@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { useCallback } from "react";
 
 export interface UserStructure {
-  username: string;
+  name: string;
   password: string;
 }
 
@@ -13,11 +13,11 @@ const useUserApi = () => {
     try {
       const {
         data: { token },
-      } = await axios.get<
+      } = await axios.post<
         { user: UserStructure },
         AxiosResponse<{ token: string }>
       >("/users/login", {
-        data: { user },
+        user,
       });
 
       return token;

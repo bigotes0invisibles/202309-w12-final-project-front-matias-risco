@@ -1,23 +1,27 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import UserLoginStyled from "./UserLoginStyled";
 import Button from "../Button/Button";
-import { NavLink } from "react-router-dom";
+import { NavLink, Navigate } from "react-router-dom";
+import useUserApi from "../../hooks/useUserApi";
+import { toast } from "react-toastify";
 
 const minWordLength = +(import.meta.env.MIN_LENGTH_WORD ?? 3);
 
 interface UserLoginStructure {
-  username: string;
+  name: string;
   password: string;
 }
 
 const InitialUser: UserLoginStructure = {
-  username: "",
+  name: "",
   password: "",
 };
 
 const UserLogin = (): React.ReactElement => {
+  const { getTokenApi } = useUserApi();
   const [newUser, setNewUser] = useState(InitialUser);
   const [buttonState, setButtonState] = useState(true);
+  const [isRedirec, setIsRedirec] = useState(false);
 
   const onChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -31,20 +35,35 @@ const UserLogin = (): React.ReactElement => {
   useEffect(() => {
     setButtonState(
       newUser.password.length < minWordLength ||
-        newUser.username.length < minWordLength,
+        newUser.name.length < minWordLength,
     );
   }, [newUser]);
 
+  const onSumbit = useCallback(
+    async (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+
+      try {
+        await getTokenApi(newUser);
+        toast.success(`Succes in Login`);
+        setIsRedirec(true);
+      } catch (error) {
+        toast.error(`Error in Login`);
+      }
+    },
+    [getTokenApi, newUser],
+  );
+
   return (
-    <UserLoginStyled autoComplete="off">
+    <UserLoginStyled autoComplete="off" onSubmit={onSumbit}>
       <h2>User Login</h2>
 
       <div className="user-form__input">
-        <label htmlFor="username">Username: </label>
+        <label htmlFor="name">Username: </label>
         <input
           type="text"
-          id="username"
-          value={newUser.username}
+          id="name"
+          value={newUser.name}
           onChange={onChange}
           className="input-text"
           required
@@ -68,6 +87,7 @@ const UserLogin = (): React.ReactElement => {
       <Button className="button--text" disable={buttonState}>
         Login
       </Button>
+      {isRedirec && <Navigate to={`/home`} />}
     </UserLoginStyled>
   );
 };

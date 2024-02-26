@@ -1,7 +1,7 @@
 import { UserStructure } from "../hooks/useUserApi";
 
 const usersMocks: UserStructure = {
-  username: "Ana",
+  name: "Ana",
   password: "peke",
 };
 
