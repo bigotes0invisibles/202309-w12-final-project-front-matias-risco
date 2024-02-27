@@ -1,20 +1,16 @@
 import axios, { AxiosResponse } from "axios";
 import { useCallback } from "react";
-
-export interface UserStructure {
-  name: string;
-  password: string;
-}
+import { UserBaseStructure } from "../store/feature/user/types";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 
 const useUserApi = () => {
-  const getTokenApi = useCallback(async (user: UserStructure) => {
+  const getTokenApi = useCallback(async (user: UserBaseStructure) => {
     try {
       const {
         data: { token },
       } = await axios.post<
-        { user: UserStructure },
+        { user: UserBaseStructure },
         AxiosResponse<{ token: string }>
       >("/users/login", {
         user,
