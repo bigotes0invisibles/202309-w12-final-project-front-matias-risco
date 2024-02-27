@@ -12,7 +12,7 @@ describe("Given the component UserLogin", () => {
       const testPassword = "peke";
       const expectedButtonDisable = false;
 
-      customRender(<UserLogin />, { isMemoryRouter: true });
+      customRender(<UserLogin />, { isMemoryRouter: true, isProvider: true });
 
       const inputUsernameElement = screen.getByRole("textbox", {
         name: "Username:",
@@ -38,8 +38,6 @@ describe("Given the component UserLogin", () => {
         name: "Login",
       })) as HTMLButtonElement;
 
-      console.log(loginButton);
-
       expect(loginButton.disabled).toBe(expectedButtonDisable);
     });
   });
@@ -49,7 +47,7 @@ describe("Given the component UserLogin", () => {
       const testPassword = "peke";
       const expectedButtonDisable = true;
 
-      customRender(<UserLogin />, { isMemoryRouter: true });
+      customRender(<UserLogin />, { isMemoryRouter: true, isProvider: true });
 
       const inputPasswordElement = screen.getByLabelText(
         "Password:",
@@ -75,7 +73,11 @@ describe("Given the component UserLogin", () => {
       const testPassword = "peke";
       const succesMessage = "Succes in Login";
 
-      customRender(<UserLogin />, { isMemoryRouter: true, isToastify: true });
+      customRender(<UserLogin />, {
+        isMemoryRouter: true,
+        isToastify: true,
+        isProvider: true,
+      });
 
       const inputUsernameElement = screen.getByRole("textbox", {
         name: "Username:",
@@ -116,7 +118,11 @@ describe("Given the component UserLogin", () => {
       const testPassword = "peke";
       const ErrorMessage = "Error in Login";
 
-      customRender(<UserLogin />, { isMemoryRouter: true, isToastify: true });
+      customRender(<UserLogin />, {
+        isMemoryRouter: true,
+        isToastify: true,
+        isProvider: true,
+      });
 
       const inputUsernameElement = screen.getByRole("textbox", {
         name: "Username:",

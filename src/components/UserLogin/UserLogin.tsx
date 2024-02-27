@@ -4,15 +4,13 @@ import Button from "../Button/Button";
 import { NavLink, Navigate } from "react-router-dom";
 import useUserApi from "../../hooks/useUserApi";
 import { toast } from "react-toastify";
+import { UserBaseStructure } from "../../store/feature/user/types";
+import { useDispatch } from "react-redux";
+import { loadUserActionCreator } from "../../store/feature/user/userSlice";
 
 const minWordLength = +(import.meta.env.MIN_LENGTH_WORD ?? 3);
 
-interface UserLoginStructure {
-  name: string;
-  password: string;
-}
-
-const InitialUser: UserLoginStructure = {
+const InitialUser: UserBaseStructure = {
   name: "",
   password: "",
 };
@@ -22,6 +20,7 @@ const UserLogin = (): React.ReactElement => {
   const [newUser, setNewUser] = useState(InitialUser);
   const [buttonState, setButtonState] = useState(true);
   const [isRedirec, setIsRedirec] = useState(false);
+  const dispatch = useDispatch();
 
   const onChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -44,14 +43,15 @@ const UserLogin = (): React.ReactElement => {
       event.preventDefault();
 
       try {
-        await getTokenApi(newUser);
+        const token = await getTokenApi(newUser);
+        dispatch(loadUserActionCreator({ name: newUser.name, token }));
         toast.success(`Succes in Login`);
         setIsRedirec(true);
       } catch (error) {
         toast.error(`Error in Login`);
       }
     },
-    [getTokenApi, newUser],
+    [dispatch, getTokenApi, newUser],
   );
 
   return (
