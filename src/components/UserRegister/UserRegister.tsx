@@ -4,6 +4,7 @@ import Button from "../Button/Button";
 import { Navigate } from "react-router-dom";
 import UserRegisterStyled from "./UserRegisterStyled";
 import { toast } from "react-toastify";
+import useUserApi from "../../hooks/useUserApi";
 
 const minWordLength = +(import.meta.env.MIN_LENGTH_WORD ?? 3);
 
@@ -14,6 +15,7 @@ const InitialRegistration: UserRegisterStructure = {
 };
 
 const UserRegister = (): React.ReactElement => {
+  const { AddUserApi } = useUserApi();
   const [newUser, setNewUser] = useState(InitialRegistration);
   const [buttonState, setButtonState] = useState(true);
   const [isRedirec, setIsRedirec] = useState(false);
@@ -38,10 +40,16 @@ const UserRegister = (): React.ReactElement => {
   const onSumbit = useCallback(
     async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
-      toast.success(`Succes in Register User`);
-      setIsRedirec(true);
+
+      try {
+        await AddUserApi(newUser);
+        toast.success(`Succes in Register User`);
+        setIsRedirec(true);
+      } catch (error) {
+        toast.success(`Error in Register User`);
+      }
     },
-    [],
+    [AddUserApi, newUser],
   );
 
   return (
