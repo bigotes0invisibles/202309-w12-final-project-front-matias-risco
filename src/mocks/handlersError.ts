@@ -30,4 +30,8 @@ export const handlersError = [
   http.post(`${urlApi}/users/login`, () => {
     return HttpResponse.error();
   }),
+
+  http.post(`${urlApi}/users/add`, () => {
+    return HttpResponse.error();
+  }),
 ];

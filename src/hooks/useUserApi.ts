@@ -22,7 +22,21 @@ const useUserApi = () => {
     }
   }, []);
 
-  return { getTokenApi };
+  const AddUserApi = useCallback(async (newUser: UserBaseStructure) => {
+    try {
+      const {
+        data: { user },
+      } = await axios.post<{ user: UserBaseStructure }>("/users/add", {
+        user: newUser,
+      });
+
+      return user;
+    } catch (error) {
+      throw new Error("Error in register new user");
+    }
+  }, []);
+
+  return { getTokenApi, AddUserApi };
 };
 
 export default useUserApi;
