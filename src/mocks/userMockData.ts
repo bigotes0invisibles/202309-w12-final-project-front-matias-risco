@@ -1,6 +1,6 @@
-import { UserStructure } from "../hooks/useUserApi";
+import { UserBaseStructure } from "../store/feature/user/types";
 
-const usersMocks: UserStructure = {
+const usersMocks: UserBaseStructure = {
   name: "Ana",
   password: "peke",
 };
