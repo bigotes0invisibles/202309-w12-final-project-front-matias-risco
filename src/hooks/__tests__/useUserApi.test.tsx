@@ -58,4 +58,54 @@ describe("Given the hook useUserApi", () => {
       expect(actualToken).toBe(expectedToken);
     });
   });
+
+  describe("When AddUserApi is call with user information of Ana", () => {
+    test("it should return a user with info of Ana", async () => {
+      const user = usersMocks;
+
+      const {
+        result: {
+          current: { AddUserApi },
+        },
+      } = renderHook(useUserApi, {
+        wrapper: ({ children }: PropsWithChildren) => (
+          <Provider store={store}>{children}</Provider>
+        ),
+      });
+
+      const actualUser = await AddUserApi(user);
+
+      expect(actualUser.name).toBe(user.name);
+    });
+  });
+
+  describe("When AddUserApi is call with user information of Ana, but there is a Error", () => {
+    test("it should return a Error", async () => {
+      server.use(...handlersError);
+      const user = usersMocks;
+
+      let testError: string;
+      const expectedError = "Error in register new user";
+
+      const {
+        result: {
+          current: { AddUserApi },
+        },
+      } = renderHook(useUserApi, {
+        wrapper: ({ children }: PropsWithChildren) => (
+          <Provider store={store}>{children}</Provider>
+        ),
+      });
+
+      try {
+        await AddUserApi(user);
+
+        testError = "";
+      } catch (error) {
+        testError = (error as Error).message;
+      }
+
+      expect(testError).toBe(expectedError);
+    });
+  });
 });

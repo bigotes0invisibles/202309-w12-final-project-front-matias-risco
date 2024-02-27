@@ -6,6 +6,7 @@ import {
 } from "../store/feature/games/types";
 import gamesMock from "./gamesMockData";
 import { tokenMock } from "./userMockData";
+import { UserBaseStructure } from "../store/feature/user/types";
 
 const urlApi = import.meta.env.VITE_API_URL;
 
@@ -73,4 +74,13 @@ export const handlers = [
   http.post(`${urlApi}/users/login`, () => {
     return HttpResponse.json({ token: tokenMock });
   }),
+
+  http.post<PathParams, { user: UserBaseStructure }>(
+    `${urlApi}/users/add`,
+    async ({ request }) => {
+      const { user } = await request.json();
+      const id = Math.floor(Math.random() * 10000).toString();
+      return HttpResponse.json({ user: { name: user.name, id } });
+    },
+  ),
 ];

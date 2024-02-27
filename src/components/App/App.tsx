@@ -24,6 +24,10 @@ const LazyLoginUserPage = React.lazy(
   () => import("../../pages/LoginUserPage/LoginUserPage"),
 );
 
+const LazyRegisterUserPage = React.lazy(
+  () => import("../../pages/RegisterUserPage/RegisterUserPage"),
+);
+
 const App = (): React.ReactElement => {
   const { isLoading } = useAppSelector(({ uiState }) => uiState);
   return (
@@ -76,6 +80,14 @@ const App = (): React.ReactElement => {
           element={
             <React.Suspense>
               <LazyLoginUserPage />
+            </React.Suspense>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <React.Suspense>
+              <LazyRegisterUserPage />
             </React.Suspense>
           }
         />
