@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import GameInfo from "../../components/GameInfo/GameInfo";
 import usePageHooks from "../../hooks/usePageHooks";
 import { initialGame } from "../../store/feature/games/utils";
+import CommentForm from "../../components/CommentForm/CommentForm";
 
 const InfoGamePage = (): React.ReactElement => {
   const { idGame } = useParams<{ idGame: string }>();
@@ -24,6 +25,7 @@ const InfoGamePage = (): React.ReactElement => {
       <h1>Info Game</h1>
       {isGame && <GameInfo game={game} />}
       {isErrorLoading && <Navigate to="/game/info-error" />}
+      <CommentForm gameId={game.id} />
     </InfoGamePageStyled>
   );
 };
