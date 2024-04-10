@@ -33,10 +33,10 @@ const CommentForm = ({
   }, [gameId, name, newComment, token]);
 
   const onSubmit = useCallback(
-    (event: React.FormEvent<HTMLFormElement>) => {
+    async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       try {
-        addCommentApi(newComment);
+        await addCommentApi(newComment);
         toast.success(`Succes in upload comment`);
       } catch (error) {
         toast.error(`Error in upload comment`);
