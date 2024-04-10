@@ -34,4 +34,8 @@ export const handlersError = [
   http.post(`${urlApi}/users/add`, () => {
     return HttpResponse.error();
   }),
+
+  http.post(`${urlApi}/comments/add`, () => {
+    return HttpResponse.error();
+  }),
 ];

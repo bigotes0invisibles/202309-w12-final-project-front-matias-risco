@@ -7,6 +7,10 @@ import {
 import gamesMock from "./gamesMockData";
 import { tokenMock } from "./userMockData";
 import { UserBaseStructure } from "../store/feature/user/types";
+import {
+  AddCommentApiStructure,
+  CommentApiStructure,
+} from "../store/feature/comments/types";
 
 const urlApi = import.meta.env.VITE_API_URL;
 
@@ -81,6 +85,16 @@ export const handlers = [
       const { user } = await request.json();
       const id = Math.floor(Math.random() * 10000).toString();
       return HttpResponse.json({ user: { name: user.name, id } });
+    },
+  ),
+
+  http.post<PathParams, { comment: AddCommentApiStructure }>(
+    `${urlApi}/comments/add`,
+    async ({ request }) => {
+      const { comment } = await request.json();
+      const newComment: CommentApiStructure = { ...comment, id: "adawd221312" };
+
+      return HttpResponse.json({ comment: { ...newComment } });
     },
   ),
 ];
