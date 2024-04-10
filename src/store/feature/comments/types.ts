@@ -4,4 +4,7 @@ export interface CommentApiStructure {
   token: string;
   comment: string;
   response: string[];
+  username: string;
 }
+
+export type AddCommentApiStructure = Omit<CommentApiStructure, "id">;

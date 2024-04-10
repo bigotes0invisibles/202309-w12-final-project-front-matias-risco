@@ -1,16 +1,17 @@
 import React, { useCallback, useEffect, useState } from "react";
 import CommentFormStyled from "./CommentFormStyled";
 import Button from "../Button/Button";
-import { CommentApiStructure } from "../../store/feature/comments/types";
+import { AddCommentApiStructure } from "../../store/feature/comments/types";
 import { useAppSelector } from "../../store/hooks";
 import { toast } from "react-toastify";
+import useCommentApi from "../../hooks/useCommentApi";
 
-const InitialComment: CommentApiStructure = {
+const InitialComment: AddCommentApiStructure = {
   _idGame: "",
   comment: "",
-  id: "",
   response: [],
   token: "",
+  username: "",
 };
 
 interface CommentFormParametersStructure {
@@ -21,18 +22,28 @@ const CommentForm = ({
   gameId,
 }: CommentFormParametersStructure): React.ReactElement => {
   const [newComment, setNewComment] = useState(InitialComment);
+  const { addCommentApi } = useCommentApi();
   const [disable, setDisable] = useState(true);
-  const { token } = useAppSelector(({ userState }) => userState);
+  const { token, name } = useAppSelector(({ userState }) => userState);
 
   useEffect(() => {
     newComment._idGame = gameId;
     newComment.token = token;
-  }, [gameId, token, newComment]);
+    newComment.username = name;
+  }, [gameId, name, newComment, token]);
 
-  const onSubmit = useCallback((event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    toast.success(`Succes in upload comment`);
-  }, []);
+  const onSubmit = useCallback(
+    (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      try {
+        addCommentApi(newComment);
+        toast.success(`Succes in upload comment`);
+      } catch (error) {
+        toast.error(`Error in upload comment`);
+      }
+    },
+    [addCommentApi, newComment],
+  );
 
   const onChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setNewComment((newComment) => ({
