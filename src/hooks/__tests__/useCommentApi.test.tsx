@@ -15,7 +15,7 @@ describe("Given the hook useCommentApi", () => {
         comment: "asdfagtfq3wagfasf",
         response: [],
         token: "asdfa2dadfafa2A2a",
-        username: "Ana",
+        userName: "Ana",
       };
 
       const {
@@ -46,7 +46,7 @@ describe("Given the hook useCommentApi", () => {
         comment: "asdfagtfq3wagfasf",
         response: [],
         token: "asdfa2dadfafa2A2a",
-        username: "Ana",
+        userName: "Ana",
       };
 
       const {
