@@ -11,7 +11,7 @@ const InitialComment: AddCommentApiStructure = {
   comment: "",
   response: [],
   token: "",
-  username: "",
+  userName: "",
 };
 
 interface CommentFormParametersStructure {
@@ -29,7 +29,7 @@ const CommentForm = ({
   useEffect(() => {
     newComment._idGame = gameId;
     newComment.token = token;
-    newComment.username = name;
+    newComment.userName = name;
   }, [gameId, name, newComment, token]);
 
   const onSubmit = useCallback(
