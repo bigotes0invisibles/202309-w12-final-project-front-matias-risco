@@ -1,10 +1,19 @@
-export interface CommentApiStructure {
+export interface BaseCommentStructure {
   id: string;
   _idGame: string;
-  token: string;
+  _idUser: string;
+  userName: string;
   comment: string;
   response: string[];
-  userName: string;
+}
+
+export interface CommentStateStructure {
+  comments: BaseCommentStructure[];
+}
+
+export interface CommentApiStructure
+  extends Omit<BaseCommentStructure, "_idUser"> {
+  token: string;
 }
 
 export type AddCommentApiStructure = Omit<CommentApiStructure, "id">;
