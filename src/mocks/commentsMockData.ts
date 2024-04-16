@@ -24,7 +24,7 @@ export const commentsMock: BaseCommentStructure[] = [
     _idUser: "d;qkjd1209dj90d2912dj",
     comment: "algo estoy commentando",
     response: [],
-    userName: "alfarium",
+    userName: "corpo",
   },
   {
     id: "1lf1jjf9229dd912d9",
@@ -32,6 +32,6 @@ export const commentsMock: BaseCommentStructure[] = [
     _idUser: "d;qkjd1209dj90d2912dj",
     comment: "algo estoy commentando en games 1",
     response: [],
-    userName: "alfarium",
+    userName: "mind_void",
   },
 ];
