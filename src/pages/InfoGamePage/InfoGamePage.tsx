@@ -1,12 +1,14 @@
 import { Navigate, useParams } from "react-router-dom";
 import InfoGamePageStyled from "./InfoGamePageStyled";
-import { useAppSelector } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { useEffect, useState } from "react";
 import GameInfo from "../../components/GameInfo/GameInfo";
 import usePageHooks from "../../hooks/usePageHooks";
 import { initialGame } from "../../store/feature/games/utils";
 import CommentForm from "../../components/CommentForm/CommentForm";
 import CommentsListGame from "../../components/CommentsListGame/CommentsListGame";
+import useCommentApi from "../../hooks/useCommentApi";
+import { loadCommentsActionCreator } from "../../store/feature/comments/commentSlice";
 
 const InfoGamePage = (): React.ReactElement => {
   const { idGame } = useParams<{ idGame: string }>();
@@ -14,10 +16,17 @@ const InfoGamePage = (): React.ReactElement => {
   const [game, setGame] = useState(initialGame);
   const [isErrorLoading, setIsErrorLoading] = useState(false);
   const { loadingGameByIdParams } = usePageHooks();
+  const { getCommentsApi } = useCommentApi();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
+    (async () => {
+      const comments = await getCommentsApi(idGame!);
+      dispatch(loadCommentsActionCreator(comments));
+    })();
+
     loadingGameByIdParams(idGame!, { games, setGame, setIsErrorLoading });
-  }, [games, idGame, loadingGameByIdParams]);
+  }, [dispatch, games, getCommentsApi, idGame, loadingGameByIdParams]);
 
   const isGame: boolean = game.id?.length !== 0;
 
