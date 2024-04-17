@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { useCallback } from "react";
 import {
   AddCommentApiStructure,
+  BaseCommentStructure,
   CommentApiStructure,
 } from "../store/feature/comments/types";
 
@@ -30,7 +31,29 @@ const useCommentApi = () => {
     [],
   );
 
-  return { addCommentApi };
+  const getCommentsApi = useCallback(
+    async (gameId: string): Promise<BaseCommentStructure[]> => {
+      try {
+        const {
+          data: { comments },
+        } = await axios.get<
+          { idGame: string },
+          AxiosResponse<{ comments: BaseCommentStructure[] }>
+        >("/comments", {
+          params: {
+            idGame: gameId,
+          },
+        });
+
+        return comments;
+      } catch (error) {
+        throw new Error("Error in gettting comments");
+      }
+    },
+    [],
+  );
+
+  return { addCommentApi, getCommentsApi };
 };
 
 export default useCommentApi;

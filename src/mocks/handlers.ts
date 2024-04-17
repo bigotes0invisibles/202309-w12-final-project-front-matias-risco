@@ -11,6 +11,7 @@ import {
   AddCommentApiStructure,
   CommentApiStructure,
 } from "../store/feature/comments/types";
+import { commentsMock } from "./commentsMockData";
 
 const urlApi = import.meta.env.VITE_API_URL;
 
@@ -97,4 +98,14 @@ export const handlers = [
       return HttpResponse.json({ comment: { ...newComment } });
     },
   ),
+
+  http.get(`${urlApi}/comments`, ({ request }) => {
+    const url = new URL(request.url);
+
+    const idGame = url.searchParams.get("idGame")!;
+    const comments = commentsMock.filter(
+      (comments) => comments._idGame === idGame,
+    );
+    return HttpResponse.json({ comments });
+  }),
 ];

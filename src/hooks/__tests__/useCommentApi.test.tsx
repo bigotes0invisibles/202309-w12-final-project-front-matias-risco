@@ -6,6 +6,7 @@ import { AddCommentApiStructure } from "../../store/feature/comments/types";
 import useCommentApi from "../useCommentApi";
 import { server } from "../../mocks/main";
 import { handlersError } from "../../mocks/handlersError";
+import { commentsMock } from "../../mocks/commentsMockData";
 
 describe("Given the hook useCommentApi", () => {
   describe("When addCommentApi is call with new comment of Ana without containing id", () => {
@@ -41,6 +42,7 @@ describe("Given the hook useCommentApi", () => {
   describe("When addCommentApi is call with new comment of Ana without containing id, but there is a Error", () => {
     test("it should throw 'Error in adding new commnet'", async () => {
       server.use(...handlersError);
+      const expectedError = "Error in adding new commnet";
       const newComment: AddCommentApiStructure = {
         _idGame: "dw12321r24t3t34y523",
         comment: "asdfagtfq3wagfasf",
@@ -67,7 +69,58 @@ describe("Given the hook useCommentApi", () => {
         actualError = (error as Error).message;
       }
 
-      expect(actualError).toBe("Error in adding new commnet");
+      expect(actualError).toBe(expectedError);
+    });
+  });
+
+  describe("When getCommentsApi is call with the id of Candy crush", () => {
+    test("it should return all the comments witch have the id of Candycrush", async () => {
+      const gameId = commentsMock[0]._idGame;
+      const expectedComments = commentsMock.filter(
+        (comment) => comment._idGame === gameId,
+      );
+
+      const {
+        result: {
+          current: { getCommentsApi },
+        },
+      } = renderHook(useCommentApi, {
+        wrapper: ({ children }: PropsWithChildren) => (
+          <Provider store={store}>{children}</Provider>
+        ),
+      });
+
+      const actualComments = await getCommentsApi(gameId);
+
+      expect(actualComments).toStrictEqual(expectedComments);
+    });
+  });
+
+  describe("When getCommentsApi is call with the id of Candy crush", () => {
+    test("it should throw 'Error in getting comments'", async () => {
+      server.use(...handlersError);
+      const gameId = commentsMock[0]._idGame;
+      const expectedError = "Error in gettting comments";
+
+      const {
+        result: {
+          current: { getCommentsApi },
+        },
+      } = renderHook(useCommentApi, {
+        wrapper: ({ children }: PropsWithChildren) => (
+          <Provider store={store}>{children}</Provider>
+        ),
+      });
+
+      let actualError: string = "hey this is not a error";
+
+      try {
+        await getCommentsApi(gameId);
+      } catch (error) {
+        actualError = (error as Error).message;
+      }
+
+      expect(actualError).toBe(expectedError);
     });
   });
 });

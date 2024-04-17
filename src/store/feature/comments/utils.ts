@@ -9,5 +9,4 @@ export const copyComment = (
 
 export const copyComments = (
   comments: BaseCommentStructure[],
-): BaseCommentStructure[] =>
-  comments.map((comment) => ({ ...comment, response: [...comment.response] }));
+): BaseCommentStructure[] => comments.map((comment) => copyComment(comment));
