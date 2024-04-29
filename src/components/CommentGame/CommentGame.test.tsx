@@ -8,7 +8,8 @@ describe("Given the component CommentGame", () => {
     test("the user should see the heading of Alfarium", () => {
       const alfariumComment = commentsMock[0];
       const tag = "heading";
-      const expectedText = alfariumComment.userName;
+      const commentUserSubText = "user: ";
+      const expectedText = commentUserSubText + alfariumComment.userName;
 
       customRender(<CommentGame comment={alfariumComment} />);
 

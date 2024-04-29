@@ -10,10 +10,14 @@ describe("Given the component CommentsListGame", () => {
       const [alfariumComment, decariumComment, corpoComment, mindVoidComment] =
         commentsMock;
       const tag = "heading";
-      const expectedTextAlfarium = alfariumComment.userName;
-      const expectedTextDecarium = decariumComment.userName;
-      const expectedTextCorpo = corpoComment.userName;
-      const expectedTextMindVoid = mindVoidComment.userName;
+      const commentUserSubText = "user: ";
+      const expectedTextAlfarium =
+        commentUserSubText + alfariumComment.userName;
+      const expectedTextDecarium =
+        commentUserSubText + decariumComment.userName;
+      const expectedTextCorpo = commentUserSubText + corpoComment.userName;
+      const expectedTextMindVoid =
+        commentUserSubText + mindVoidComment.userName;
 
       customRender(
         <CommentsListGame />,
