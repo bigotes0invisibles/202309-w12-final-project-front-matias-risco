@@ -9,7 +9,7 @@ import { tokenMock } from "./userMockData";
 import { UserBaseStructure } from "../store/feature/user/types";
 import {
   AddCommentApiStructure,
-  CommentApiStructure,
+  BaseCommentStructure,
 } from "../store/feature/comments/types";
 import { commentsMock } from "./commentsMockData";
 
@@ -93,7 +93,14 @@ export const handlers = [
     `${urlApi}/comments/add`,
     async ({ request }) => {
       const { comment } = await request.json();
-      const newComment: CommentApiStructure = { ...comment, id: "adawd221312" };
+
+      const { token: _token, ...commentAlfa } = comment;
+
+      const newComment: BaseCommentStructure = {
+        ...commentAlfa,
+        id: "adawd221312",
+        _idUser: "asdfaf",
+      };
 
       return HttpResponse.json({ comment: { ...newComment } });
     },

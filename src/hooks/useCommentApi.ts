@@ -3,7 +3,6 @@ import { useCallback } from "react";
 import {
   AddCommentApiStructure,
   BaseCommentStructure,
-  CommentApiStructure,
 } from "../store/feature/comments/types";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
@@ -12,19 +11,19 @@ const useCommentApi = () => {
   const addCommentApi = useCallback(
     async (
       newComment: AddCommentApiStructure,
-    ): Promise<CommentApiStructure> => {
+    ): Promise<BaseCommentStructure> => {
       try {
         const {
           data: { comment },
         } = await axios.post<
           { comment: AddCommentApiStructure },
-          AxiosResponse<{ comment: CommentApiStructure }>
+          AxiosResponse<{ comment: BaseCommentStructure }>
         >("/comments/add", {
           comment: newComment,
         });
 
         return comment;
-      } catch (error) {
+      } catch (_error) {
         throw new Error("Error in adding new commnet");
       }
     },
@@ -46,7 +45,7 @@ const useCommentApi = () => {
         });
 
         return comments;
-      } catch (error) {
+      } catch (_error) {
         throw new Error("Error in gettting comments");
       }
     },
