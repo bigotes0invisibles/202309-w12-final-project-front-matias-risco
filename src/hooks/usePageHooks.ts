@@ -32,7 +32,7 @@ const usePageHooks = () => {
         newGame = await infoGameApi(idGame);
         setGame(newGame);
         dispatch(loadGamesActionCreator([newGame, ...games]));
-      } catch (error) {
+      } catch (_error) {
         toast.error("Error game not found");
         setIsErrorLoading(true);
       }

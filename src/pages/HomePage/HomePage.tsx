@@ -41,7 +41,7 @@ const HomePage = (): React.ReactElement => {
           dispatch(setGamePageActionCreator(page));
           dispatch(loadGamesActionCreator(gamesData));
         }
-      } catch (error) {
+      } catch (_error) {
         await toast.error("Error in loading page");
       }
     })();

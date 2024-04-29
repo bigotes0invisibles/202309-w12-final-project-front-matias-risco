@@ -47,7 +47,7 @@ const UserLogin = (): React.ReactElement => {
         dispatch(loadUserActionCreator({ name: newUser.name, token }));
         toast.success(`Succes in Login`);
         setIsRedirec(true);
-      } catch (error) {
+      } catch (_error) {
         toast.error(`Error in Login`);
       }
     },
