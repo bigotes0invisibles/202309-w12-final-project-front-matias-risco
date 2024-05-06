@@ -99,7 +99,6 @@ export const handlers = [
       const newComment: BaseCommentStructure = {
         ...commentAlfa,
         id: "adawd221312",
-        _idUser: "asdfaf",
       };
 
       return HttpResponse.json({ comment: { ...newComment } });
@@ -110,9 +109,10 @@ export const handlers = [
     const url = new URL(request.url);
 
     const idGame = url.searchParams.get("idGame")!;
-    const comments = commentsMock.filter(
-      (comments) => comments._idGame === idGame,
-    );
+    const comments: BaseCommentStructure[] = commentsMock
+      .filter((comments) => comments.idGame === idGame)
+      .map(({ idGame, idUser, ...baseComment }) => ({ ...baseComment }));
+
     return HttpResponse.json({ comments });
   }),
 ];

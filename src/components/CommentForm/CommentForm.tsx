@@ -8,7 +8,7 @@ import useCommentApi from "../../hooks/useCommentApi";
 import { addCommentActionCreator } from "../../store/feature/comments/commentSlice";
 
 const InitialComment: AddCommentApiStructure = {
-  _idGame: "",
+  idGame: "",
   comment: "",
   response: [],
   token: "",
@@ -29,7 +29,7 @@ const CommentForm = ({
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    newComment._idGame = gameId;
+    newComment.idGame = gameId;
     newComment.token = token;
     newComment.userName = name;
   }, [gameId, name, newComment, token]);
@@ -59,7 +59,7 @@ const CommentForm = ({
     setDisable(
       newComment.token === "" ||
         newComment.comment === "" ||
-        newComment._idGame === "",
+        newComment.idGame === "",
     );
   }, [newComment]);
 
