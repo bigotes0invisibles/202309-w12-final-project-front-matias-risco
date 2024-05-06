@@ -17,7 +17,7 @@ const useUserApi = () => {
       });
 
       return token;
-    } catch (error) {
+    } catch (_error) {
       throw new Error("Error in login, username or password is incorrect");
     }
   }, []);
@@ -32,7 +32,7 @@ const useUserApi = () => {
         });
 
         return user;
-      } catch (error) {
+      } catch (_error) {
         throw new Error("Error in register new user");
       }
     },

@@ -9,8 +9,9 @@ import { tokenMock } from "./userMockData";
 import { UserBaseStructure } from "../store/feature/user/types";
 import {
   AddCommentApiStructure,
-  CommentApiStructure,
+  BaseCommentStructure,
 } from "../store/feature/comments/types";
+import { commentsMock } from "./commentsMockData";
 
 const urlApi = import.meta.env.VITE_API_URL;
 
@@ -92,9 +93,26 @@ export const handlers = [
     `${urlApi}/comments/add`,
     async ({ request }) => {
       const { comment } = await request.json();
-      const newComment: CommentApiStructure = { ...comment, id: "adawd221312" };
+
+      const { token: _token, ...commentAlfa } = comment;
+
+      const newComment: BaseCommentStructure = {
+        ...commentAlfa,
+        id: "adawd221312",
+      };
 
       return HttpResponse.json({ comment: { ...newComment } });
     },
   ),
+
+  http.get(`${urlApi}/comments`, ({ request }) => {
+    const url = new URL(request.url);
+
+    const idGame = url.searchParams.get("idGame")!;
+    const comments: BaseCommentStructure[] = commentsMock
+      .filter((comments) => comments.idGame === idGame)
+      .map(({ idGame, idUser, ...baseComment }) => ({ ...baseComment }));
+
+    return HttpResponse.json({ comments });
+  }),
 ];

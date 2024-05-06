@@ -3,8 +3,18 @@ import customRender from "../../utils/customRender";
 import InfoGamePage from "./InfoGamePage";
 import gamesMock from "../../mocks/gamesMockData";
 import { Route, Routes } from "react-router-dom";
+import { PreloadedState } from "@reduxjs/toolkit";
+import { RootState } from "../../store";
+import { commentsMock } from "../../mocks/commentsMockData";
 
 describe("Given the component InfoGamePage", () => {
+  const preloadedStateGamesLoaded: PreloadedState<RootState> = {
+    gameState: {
+      games: gamesMock,
+      page: 0,
+      maxPage: Math.floor(gamesMock.length / 10) + 1,
+    },
+  };
   describe("When InfoGamePage it is render with the id of 'Ultrakill'and it is not load in store", () => {
     test("the user should see the heading of InfoGame is 'Ultrakill'", async () => {
       const expectedTitle = "Ultrakill";
@@ -35,7 +45,55 @@ describe("Given the component InfoGamePage", () => {
     });
   });
 
-  describe("When InfoGamePage it is render and alredy have load the info of Ultrakill", () => {
+  describe("When InfoGamePage it is render and alredy have load the info of 'candyCrush'", () => {
+    test("the user should see the comments of the game 'candyCrush'", async () => {
+      const tag = "heading";
+      const candyCrushId = gamesMock[1].id;
+      const [alfariumComment, decariumComment, corpoComment, mindVoidComment] =
+        commentsMock;
+      const commentUserSubText = "user: ";
+      const expectedTextAlfarium =
+        commentUserSubText + alfariumComment.userName;
+      const expectedTextDecarium =
+        commentUserSubText + decariumComment.userName;
+      const expectedTextCorpo = commentUserSubText + corpoComment.userName;
+      const expectedTextMindVoid =
+        commentUserSubText + mindVoidComment.userName;
+
+      customRender(
+        <Routes>
+          <Route path="/game/info/:idGame" element={<InfoGamePage />} />
+        </Routes>,
+        { isMemoryRouter: true, isProvider: true },
+        {
+          preloadedState: preloadedStateGamesLoaded,
+          initialPath: `/game/info/${candyCrushId}`,
+        },
+      );
+      const headingElementAlfarium = await screen.findByRole(tag, {
+        name: expectedTextAlfarium,
+      });
+
+      const headingElementDecarium = await screen.findByRole(tag, {
+        name: expectedTextDecarium,
+      });
+
+      const headingElementCorpo = await screen.findByRole(tag, {
+        name: expectedTextCorpo,
+      });
+
+      const headingElementMindVoid = await screen.findByRole(tag, {
+        name: expectedTextMindVoid,
+      });
+
+      expect(headingElementAlfarium).toBeInTheDocument();
+      expect(headingElementDecarium).toBeInTheDocument();
+      expect(headingElementCorpo).toBeInTheDocument();
+      expect(headingElementMindVoid).toBeInTheDocument();
+    });
+  });
+
+  describe("When InfoGamePage it is render and alredy have load the info of 'ultrakill'", () => {
     test("the user should see the heading of component infoGame is 'Ultrakiil'", async () => {
       const expectedTitle = "Ultrakill";
       const tag = "heading";
@@ -46,13 +104,7 @@ describe("Given the component InfoGamePage", () => {
         </Routes>,
         { isMemoryRouter: true, isProvider: true },
         {
-          preloadedState: {
-            gameState: {
-              games: gamesMock,
-              page: 0,
-              maxPage: Math.floor(gamesMock.length / 10) + 1,
-            },
-          },
+          preloadedState: preloadedStateGamesLoaded,
           initialPath: `/game/info/${gamesMock[0].id}`,
         },
       );

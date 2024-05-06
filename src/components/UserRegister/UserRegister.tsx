@@ -45,7 +45,7 @@ const UserRegister = (): React.ReactElement => {
         await AddUserApi(newUser);
         toast.success(`Succes in Register User`);
         setIsRedirec(true);
-      } catch (error) {
+      } catch (_error) {
         toast.error(`Error in Register User`);
       }
     },
